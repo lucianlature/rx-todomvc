@@ -1,0 +1,13 @@
+# BUILD OUTPUT
+dist
+
+# DEPENDENCIES
+node_modules
+
+# ENVVARS
+.env
+
+# TEMP / LOG FILES
+npm-debug.log
+.DS_Store
+._*

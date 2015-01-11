@@ -1,0 +1,35 @@
+{
+  "name": "rx-todomvc",
+  "version": "1.0.0",
+  "description": "TodoMVC with Rx + React",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server dist/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/footballradar/rx-todomvc.git"
+  },
+  "author": "Gary Chambers <gary.chambers@footballradar.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^0.12.2",
+    "rx": "^2.3.22",
+    "todomvc-common": "git://github.com/lipsmack/todomvc-common"
+  },
+  "devDependencies": {
+    "6to5": "^2.7.4",
+    "6to5-loader": "^1.0.0",
+    "css-loader": "^0.9.0",
+    "dotenv": "^0.4.0",
+    "file-loader": "^0.8.1",
+    "html-webpack-plugin": "^1.1.0",
+    "http-server": "^0.7.4",
+    "react-hot-loader": "^1.0.7",
+    "style-loader": "^0.8.2",
+    "url-loader": "^0.5.5",
+    "webpack": "^1.4.15"
+  }
+}

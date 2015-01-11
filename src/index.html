@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>{%= o.htmlWebpackPlugin.options.title %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.20.2/es6-shim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.14/rx.all.min.js"></script>
+
+{% if (o.htmlWebpackPlugin.options.env.ENVIRONMENT === "production") { %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.0/react-with-addons.min.js"></script>
+{% } else { %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.0/react-with-addons.js"></script>
+{% } %}
+
+{% for (var chunk in o.htmlWebpackPlugin.assets) { %}
+<script src="{%= o.htmlWebpackPlugin.assets[chunk] %}"></script>
+{% } %}
+
+<section id="todoapp"></section>
+
+<footer id="info">
+    <p>Created by <a href="http://www.footballradar.com/">Football Radar</a></p>
+    <p><a href="https://github.com/footballradar/rx-todomvc">Github</a></p>
+</footer>
