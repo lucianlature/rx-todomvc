@@ -2,6 +2,8 @@
 
 _An implementation of [TodoMVC](http://todomvc.com/) using Rx + React_
 
+![DavidDM](https://img.shields.io/david/footballradar/rx-todomvc.svg?style=flat-square)
+
 ## Quickstart
 
 1. Install dependencies: `npm install -g webpack`
