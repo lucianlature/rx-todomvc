@@ -9,17 +9,17 @@ const CREATE = 1;
 const UPDATE = 2;
 const REMOVE = 3;
 
-var todoEvents = new Subject();
-var todoState = new BehaviorSubject([]);
+var todoActions = new Subject();
+var todoStore = new BehaviorSubject([]);
 
 var handleCreate = function(value) {
-    return update(todoState.value, {
+    return update(todoStore.value, {
         $push: [value]
     });
 };
 
 var handleUpdate = function(value) {
-    var state = todoState.value;
+    var state = todoStore.value;
     var idx = state.indexOf(value.current);
     return update(state, {
         [idx]: { $set: value.updated }
@@ -27,7 +27,7 @@ var handleUpdate = function(value) {
 };
 
 var handleRemove = function(value) {
-    var state = todoState.value;
+    var state = todoStore.value;
     var idx = state.indexOf(value);
     return update(state, {
         $splice: [[idx, 1]]
@@ -47,26 +47,44 @@ var isUpdate = isOfType.bind(null, UPDATE);
 var isRemove = isOfType.bind(null, REMOVE);
 
 // CREATE
-todoEvents
+todoActions
     .filter(isCreate)
     .map(evt => handleCreate(evt.value))
-    .forEach(todoState);
+    .forEach(todoStore);
 
 // UPDATE
-todoEvents
+todoActions
     .filter(isUpdate)
     .map(evt => handleUpdate(evt.value))
-    .forEach(todoState);
+    .forEach(todoStore);
 
 // REMOVE
-todoEvents
+todoActions
     .filter(isRemove)
     .map(evt => handleRemove(evt.value))
-    .forEach(todoState);
+    .forEach(todoStore);
 
 /** @return {Observable} */
 export var observeTodos = function() {
-    return todoState;
+    return todoStore;
+};
+
+/**
+* @param {Object} todo
+* @param {Boolean} isCompleted
+*/
+export var checkTodo = function(todo, isCompleted) {
+    var newTodo = update(todo, {
+        completed: { $set: isCompleted }
+    });
+
+    todoActions.onNext({
+        type: UPDATE,
+        value: {
+            current: todo,
+            updated: newTodo
+        }
+    });
 };
 
 /** @param {String} value */
@@ -78,15 +96,33 @@ export var createTodo = function(value) {
         editing: false
     };
 
-    todoEvents.onNext({
+    todoActions.onNext({
         type: CREATE,
         value: todo
     });
 };
 
+/**
+ * @param {Object} todo
+ * @param {Boolean} isEditing
+ */
+export var editingTodo = function(todo, isEditing) {
+    var newTodo = update(todo, {
+        editing: { $set: isEditing }
+    });
+
+    todoActions.onNext({
+        type: UPDATE,
+        value: {
+            current: todo,
+            updated: newTodo
+        }
+    });
+};
+
 /** @param {Object} todo */
 export var removeTodo = function(todo) {
-    todoEvents.onNext({
+    todoActions.onNext({
         type: REMOVE,
         value: todo
     });
@@ -94,14 +130,14 @@ export var removeTodo = function(todo) {
 
 /**
  * @param {Object} todo
- * @param {Boolean} isCompleted
+ * @param {String} value
  */
-export var toggleTodo = function(todo, isCompleted) {
+export var updateTodo = function(todo, value) {
     var newTodo = update(todo, {
-        completed: { $set: isCompleted }
+        value: { $set: value }
     });
 
-    todoEvents.onNext({
+    todoActions.onNext({
         type: UPDATE,
         value: {
             current: todo,

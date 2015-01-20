@@ -1,8 +1,20 @@
 import Dispatcher from "../core/Dispatcher";
 import { Observable } from "rx";
-import { observeState, updateInputValue } from "../services/StateService";
-import { observeTodos, createTodo, removeTodo, toggleTodo } from "../services/TodoService";
 import { TodoApp } from "../components";
+
+import {
+    observeState,
+    updateInputValue
+} from "../services/StateService";
+
+import {
+    observeTodos,
+    checkTodo,
+    createTodo,
+    editingTodo,
+    removeTodo,
+    updateTodo
+} from "../services/TodoService";
 
 var dispatcher = new Dispatcher();
 
@@ -31,11 +43,17 @@ export default function() {
             updateInputValue("");
         });
 
+    dispatcher.of("todos", "check")
+        .forEach(action => checkTodo(...action.value));
+
+    dispatcher.of("todos", "editing")
+        .forEach(action => editingTodo(...action.value));
+
+    dispatcher.of("todos", "update")
+        .forEach(action => updateTodo(...action.value));
+
     dispatcher.of("todos", "remove")
         .forEach(action => removeTodo(action.value));
-
-    dispatcher.of("todos", "toggle")
-        .forEach(action => toggleTodo(...action.value));
 
     dispatcher.of("todos", "input")
         .forEach(action => updateInputValue(action.value));

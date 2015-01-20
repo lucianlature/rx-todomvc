@@ -34,7 +34,7 @@ export default React.createClass({
     handleToggle() {
         this.props.todos.forEach(todo => {
             this.context.dispatcher
-                .dispatch("todos", "toggle",
+                .dispatch("todos", "check",
                     [todo, !this.isSelectAll()]);
         });
     },

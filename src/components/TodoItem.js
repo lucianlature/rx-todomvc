@@ -18,15 +18,53 @@ export default React.createClass({
         }).isRequired
     },
 
+    componentDidUpdate(prevProps) {
+        // Workaround for how React handles updates
+        // Input field focus should be applied after
+        // render has completed.
+        if (this.props.todo.editing && !prevProps.todo.editing) {
+            var node = this.refs.input.getDOMNode();
+            node.focus();
+            node.setSelectionRange(
+                node.value.length,
+                node.value.length
+            );
+        }
+    },
+
+    handleUpdate(evt) {
+        this.context.dispatcher
+            .dispatch("todos", "update",
+                [this.props.todo, evt.target.value]);
+    },
+
+    handleCheck() {
+        this.context.dispatcher
+            .dispatch("todos", "check",
+                [this.props.todo, !this.props.todo.completed]);
+    },
+
+    handleStartEditing() {
+        this.context.dispatcher
+            .dispatch("todos", "editing",
+                [this.props.todo, true]);
+    },
+
+    handleStopEditing() {
+        this.context.dispatcher
+            .dispatch("todos", "editing",
+                [this.props.todo, false]);
+    },
+
+    handleKeyDown(evt) {
+        if (evt.key === "Enter") {
+            this.handleStopEditing();
+        }
+    },
+
     handleRemove() {
         this.context.dispatcher
             .dispatch("todos", "remove", this.props.todo);
-    },
-
-    handleToggle() {
-        this.context.dispatcher
-            .dispatch("todos", "toggle",
-                [this.props.todo, !this.props.todo.completed]);
     },
 
     render() {
@@ -44,16 +82,27 @@ export default React.createClass({
                         type="checkbox"
                         className="toggle"
                         checked={todo.completed}
-                        onChange={this.handleToggle}
+                        onChange={this.handleCheck}
                     />
 
-                    <label>{todo.value}</label>
+                    <label onDoubleClick={this.handleStartEditing}>
+                        {todo.value}
+                    </label>
 
                     <button
                         className="destroy"
                         onClick={this.handleRemove}
                     />
                 </div>
+
+                <input
+                    ref="input"
+                    className="edit"
+                    value={todo.value}
+                    onChange={this.handleUpdate}
+                    onBlur={this.handleStopEditing}
+                    onKeyDown={this.handleKeyDown}
+                />
             </li>
         );
     }
