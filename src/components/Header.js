@@ -1,10 +1,14 @@
-import React from "react";
+import React from "react/addons";
 import { PropTypes } from "react";
 import TodoInput from "./TodoInput";
 
 /** @type {ReactElement} */
 export default React.createClass({
     displayName: "Header",
+
+    mixins: [
+        React.addons.PureRenderMixin
+    ],
 
     propTypes: {
         title: PropTypes.string.isRequired,

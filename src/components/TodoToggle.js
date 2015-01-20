@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react/addons";
 import { PropTypes } from "react";
 
 var noop = () => {};
@@ -6,6 +6,10 @@ var noop = () => {};
 /** @type {ReactElement} */
 export default React.createClass({
     displayName: "TodoToggle",
+
+    mixins: [
+        React.addons.PureRenderMixin
+    ],
 
     propTypes: {
         checked: PropTypes.bool.isRequired,

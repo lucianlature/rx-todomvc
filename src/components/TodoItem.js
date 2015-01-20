@@ -7,7 +7,8 @@ export default React.createClass({
     displayName: "TodoItem",
 
     mixins: [
-        DispatcherMixin
+        DispatcherMixin,
+        React.addons.PureRenderMixin
     ],
 
     propTypes: {

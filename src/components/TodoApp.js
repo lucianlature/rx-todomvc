@@ -1,6 +1,6 @@
 import { ALL, ACTIVE, COMPLETED } from "../const/FilterConst";
 import DispatcherMixin from "../mixins/DispatcherMixin";
-import React from "react";
+import React from "react/addons";
 import { PropTypes } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -12,7 +12,8 @@ export default React.createClass({
     displayName: "TodoApp",
 
     mixins: [
-        DispatcherMixin
+        DispatcherMixin,
+        React.addons.PureRenderMixin
     ],
 
     propTypes: {

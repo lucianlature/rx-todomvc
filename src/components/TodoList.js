@@ -1,10 +1,14 @@
-import React from "react";
+import React from "react/addons";
 import { PropTypes } from "react";
 import TodoItem from "./TodoItem";
 
 /** @type {ReactElement} */
 export default React.createClass({
     displayName: "TodoList",
+
+    mixins: [
+        React.addons.PureRenderMixin
+    ],
 
     propTypes: {
         todos: PropTypes.array.isRequired

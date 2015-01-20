@@ -1,5 +1,5 @@
 import DispatcherMixin from "../mixins/DispatcherMixin";
-import React from "react";
+import React from "react/addons";
 import { PropTypes } from "react";
 
 /** @return {Boolean} */
@@ -10,7 +10,8 @@ export default React.createClass({
     displayName: "TodoInput",
 
     mixins: [
-        DispatcherMixin
+        DispatcherMixin,
+        React.addons.PureRenderMixin
     ],
 
     propTypes: {

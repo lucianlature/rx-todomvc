@@ -1,6 +1,6 @@
 import { ALL, ACTIVE, COMPLETED } from "../const/FilterConst";
 import DispatcherMixin from "../mixins/DispatcherMixin";
-import React from "react";
+import React from "react/addons";
 import { PropTypes } from "react";
 
 /** @type {ReactElement} */
@@ -8,7 +8,8 @@ export default React.createClass({
     displayName: "Footer",
 
     mixins: [
-        DispatcherMixin
+        DispatcherMixin,
+        React.addons.PureRenderMixin
     ],
 
     propTypes: {
