@@ -25,7 +25,7 @@ export default class Router extends BehaviorSubject {
             this.routes[NOT_FOUND];
 
         if (typeof method === "function") {
-            method(url);
+            method(this.skip(1));
         }
     }
 }

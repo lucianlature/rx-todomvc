@@ -15,6 +15,8 @@ import {
     updateTodo
 } from "../services/TodoService";
 
+const DEBOUNCE_INTERVAL = 1000 / 60;
+
 var context = {
     actions: {
         checkTodo,
@@ -44,10 +46,15 @@ var toArray = function() {
     return Array.of(...arguments);
 };
 
-export default function() {
-    Observable.combineLatest(
+export default function(router) {
+    var source = Observable.combineLatest(
         observeTodos(),
         observeState(),
         toArray
-    ).forEach(args => render(...args));
+    );
+
+    source
+        .debounce(DEBOUNCE_INTERVAL)
+        .takeUntil(router)
+        .forEach(args => render(...args));
 }
