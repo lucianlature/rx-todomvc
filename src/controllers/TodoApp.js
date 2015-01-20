@@ -1,4 +1,3 @@
-import Dispatcher from "../core/Dispatcher";
 import { Observable } from "rx";
 import { TodoApp } from "../components";
 
@@ -16,10 +15,19 @@ import {
     updateTodo
 } from "../services/TodoService";
 
-var dispatcher = new Dispatcher();
+var context = {
+    actions: {
+        checkTodo,
+        createTodo,
+        editingTodo,
+        removeTodo,
+        updateTodo,
+        updateInputValue
+    }
+};
 
 var render = function(todos, state) {
-    React.withContext({ dispatcher: dispatcher }, function() {
+    React.withContext(context, function() {
         React.render(
             <TodoApp
                 title="todos"
@@ -37,27 +45,6 @@ var toArray = function() {
 };
 
 export default function() {
-    dispatcher.of("todos", "create")
-        .forEach(action => {
-            createTodo(action.value);
-            updateInputValue("");
-        });
-
-    dispatcher.of("todos", "check")
-        .forEach(action => checkTodo(...action.value));
-
-    dispatcher.of("todos", "editing")
-        .forEach(action => editingTodo(...action.value));
-
-    dispatcher.of("todos", "update")
-        .forEach(action => updateTodo(...action.value));
-
-    dispatcher.of("todos", "remove")
-        .forEach(action => removeTodo(action.value));
-
-    dispatcher.of("todos", "input")
-        .forEach(action => updateInputValue(action.value));
-
     Observable.combineLatest(
         observeTodos(),
         observeState(),

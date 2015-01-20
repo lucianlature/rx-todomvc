@@ -6,7 +6,7 @@ import React from "react/addons";
 /** @type {Function} */
 var update = React.addons.update;
 
-var state = new BehaviorSubject({
+var stateStore = new BehaviorSubject({
     inputValue: "",
     viewFilter: ALL
 });
@@ -32,24 +32,24 @@ var updateViewFilterForRoute = function(route) {
             break;
     }
 
-    return update(state.value, {
+    return update(stateStore.value, {
         viewFilter: { $set: viewFilter }
     });
 };
 
 history.observe()
     .map(updateViewFilterForRoute)
-    .forEach(state);
+    .forEach(stateStore);
 
 /** @return {Rx.Observable} */
 export var observeState = function() {
-    return state;
+    return stateStore;
 };
 
 /** @param {String} value */
 export var updateInputValue = function(value) {
-    state.onNext(
-        update(state.value, {
+    stateStore.onNext(
+        update(stateStore.value, {
             inputValue: { $set: value }
         })
     );

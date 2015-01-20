@@ -1,4 +1,4 @@
-import DispatcherMixin from "../mixins/DispatcherMixin";
+import ActionsMixin from "../mixins/ActionsMixin";
 import React from "react/addons";
 import { PropTypes } from "react";
 
@@ -10,7 +10,7 @@ export default React.createClass({
     displayName: "TodoInput",
 
     mixins: [
-        DispatcherMixin,
+        ActionsMixin,
         React.addons.PureRenderMixin
     ],
 
@@ -25,14 +25,17 @@ export default React.createClass({
     },
 
     handleChange(evt) {
-        this.context.dispatcher
-            .dispatch("todos", "input", evt.target.value);
+        this.context.actions
+            .updateInputValue(evt.target.value);
     },
 
     handleKeyDown(evt) {
         if (evt.key === "Enter" && !isEmpty(this.props.value)) {
-            this.context.dispatcher
-                .dispatch("todos", "create", this.props.value);
+            this.context.actions
+                .createTodo(this.props.value);
+
+            this.context.actions
+                .updateInputValue("");
         }
     },
 

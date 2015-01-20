@@ -1,4 +1,4 @@
-import DispatcherMixin from "../mixins/DispatcherMixin";
+import ActionsMixin from "../mixins/ActionsMixin";
 import React from "react/addons";
 import { PropTypes } from "react";
 
@@ -7,7 +7,7 @@ export default React.createClass({
     displayName: "TodoItem",
 
     mixins: [
-        DispatcherMixin,
+        ActionsMixin,
         React.addons.PureRenderMixin
     ],
 
@@ -34,27 +34,23 @@ export default React.createClass({
     },
 
     handleUpdate(evt) {
-        this.context.dispatcher
-            .dispatch("todos", "update",
-                [this.props.todo, evt.target.value]);
+        this.context.actions
+            .updateTodo(this.props.todo, evt.target.value);
     },
 
     handleCheck() {
-        this.context.dispatcher
-            .dispatch("todos", "check",
-                [this.props.todo, !this.props.todo.completed]);
+        this.context.actions
+            .checkTodo(this.props.todo, !this.props.todo.completed);
     },
 
     handleStartEditing() {
-        this.context.dispatcher
-            .dispatch("todos", "editing",
-                [this.props.todo, true]);
+        this.context.actions
+            .editingTodo(this.props.todo, true);
     },
 
     handleStopEditing() {
-        this.context.dispatcher
-            .dispatch("todos", "editing",
-                [this.props.todo, false]);
+        this.context.actions
+            .editingTodo(this.props.todo, false);
     },
 
     handleKeyDown(evt) {
@@ -64,8 +60,8 @@ export default React.createClass({
     },
 
     handleRemove() {
-        this.context.dispatcher
-            .dispatch("todos", "remove", this.props.todo);
+        this.context.actions
+            .removeTodo(this.props.todo);
     },
 
     render() {

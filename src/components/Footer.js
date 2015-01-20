@@ -1,5 +1,5 @@
 import { ALL, ACTIVE, COMPLETED } from "../const/FilterConst";
-import DispatcherMixin from "../mixins/DispatcherMixin";
+import ActionsMixin from "../mixins/ActionsMixin";
 import React from "react/addons";
 import { PropTypes } from "react";
 
@@ -8,7 +8,7 @@ export default React.createClass({
     displayName: "Footer",
 
     mixins: [
-        DispatcherMixin,
+        ActionsMixin,
         React.addons.PureRenderMixin
     ],
 
@@ -30,8 +30,8 @@ export default React.createClass({
 
     handleClear() {
         this.getCompleted().forEach(todo => {
-            this.context.dispatcher
-                .dispatch("todos", "remove", todo);
+            this.context.actions
+                .removeTodo(todo);
         });
     },
 

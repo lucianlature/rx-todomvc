@@ -1,5 +1,5 @@
 import { ALL, ACTIVE, COMPLETED } from "../const/FilterConst";
-import DispatcherMixin from "../mixins/DispatcherMixin";
+import ActionsMixin from "../mixins/ActionsMixin";
 import React from "react/addons";
 import { PropTypes } from "react";
 import Footer from "./Footer";
@@ -12,7 +12,7 @@ export default React.createClass({
     displayName: "TodoApp",
 
     mixins: [
-        DispatcherMixin,
+        ActionsMixin,
         React.addons.PureRenderMixin
     ],
 
@@ -34,9 +34,8 @@ export default React.createClass({
 
     handleToggle() {
         this.props.todos.forEach(todo => {
-            this.context.dispatcher
-                .dispatch("todos", "check",
-                    [todo, !this.isSelectAll()]);
+            this.context.actions
+                .checkTodo(todo, !this.isSelectAll());
         });
     },
 
