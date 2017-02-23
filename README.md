@@ -1,5 +1,7 @@
 # TodoMVC
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/lucianlature/rx-todomvc.svg)](https://greenkeeper.io/)
+
 _An implementation of [TodoMVC](http://todomvc.com/) using Rx + React_
 
 ![DavidDM](https://img.shields.io/david/footballradar/rx-todomvc.svg?style=flat-square)
