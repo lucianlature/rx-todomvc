@@ -15,21 +15,21 @@
   "author": "Gary Chambers <gary.chambers@footballradar.com>",
   "license": "MIT",
   "dependencies": {
-    "react": "^0.12.2",
-    "rx": "^2.3.22",
+    "react": "^15.4.2",
+    "rx": "^4.1.0",
     "todomvc-common": "git://github.com/lipsmack/todomvc-common"
   },
   "devDependencies": {
-    "6to5": "^2.7.4",
-    "6to5-loader": "^1.0.0",
-    "css-loader": "^0.9.0",
-    "dotenv": "^0.4.0",
-    "file-loader": "^0.8.1",
-    "html-webpack-plugin": "^1.1.0",
-    "http-server": "^0.7.4",
+    "6to5": "^3.6.5",
+    "6to5-loader": "^3.0.0",
+    "css-loader": "^0.26.1",
+    "dotenv": "^4.0.0",
+    "file-loader": "^0.10.0",
+    "html-webpack-plugin": "^2.28.0",
+    "http-server": "^0.9.0",
     "react-hot-loader": "^1.0.7",
-    "style-loader": "^0.8.2",
+    "style-loader": "^0.13.1",
     "url-loader": "^0.5.5",
-    "webpack": "^1.4.15"
+    "webpack": "^2.2.1"
   }
 }
